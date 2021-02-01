@@ -35,5 +35,5 @@ func linkTest() {
 	fmt.Println(list1.Size())
 }
 func calculateTest() {
-	calculate.Calculate("23+")
+	calculate.Calculate("23-")
 }

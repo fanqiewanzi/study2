@@ -55,10 +55,10 @@ func Calculate(str string) {
 				oNum++
 				oprateStack[oNum] = string(elem)
 			} else if k == -1 {
+				dNum--
 				first := digitalStack[dNum]
 				dNum--
 				second := digitalStack[dNum]
-				dNum--
 				op := oprateStack[oNum]
 				oNum--
 				switch op {
