@@ -1,6 +1,7 @@
 package main
 
 import (
+	"calculate"
 	"fmt"
 	"list"
 	"mix"
@@ -11,6 +12,7 @@ func main() {
 	mix.Count(str)
 	mix.Fibonacci()
 	linkTest()
+	calculateTest()
 	return
 }
 
@@ -31,4 +33,7 @@ func linkTest() {
 	fmt.Println(list1.Equals(list2))
 	fmt.Println(list1.ToSlice())
 	fmt.Println(list1.Size())
+}
+func calculateTest() {
+	calculate.Calculate("23+")
 }
