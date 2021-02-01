@@ -79,5 +79,6 @@ func Calculate(str string) {
 			}
 		}
 	}
+	dNum--
 	fmt.Println(digitalStack[dNum])
 }
