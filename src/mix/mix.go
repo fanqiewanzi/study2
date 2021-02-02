@@ -6,11 +6,11 @@ func Count(str string) {
 	digitNum, englishNum, spaceNum, otherNum := 0, 0, 0, 0
 	for _, elem := range str {
 		switch {
-		case elem >= 48 && elem <= 57:
+		case elem >= '0' && elem <= '9':
 			digitNum++
-		case elem >= 65 && elem <= 90 || elem >= 97 && elem <= 122:
+		case elem >= 'a' && elem <= 'z' || elem >= 'A' && elem <= 'Z':
 			englishNum++
-		case elem == 32:
+		case elem == ' ':
 			spaceNum++
 		default:
 			otherNum++
@@ -31,6 +31,5 @@ func Fibonacci() {
 		fibo[i] = fibo[i-1] + fibo[i-2]
 		fmt.Print(" ")
 		fmt.Print(fibo[i])
-
 	}
 }

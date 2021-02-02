@@ -42,18 +42,21 @@ func Calculate(str string) {
 	oNum := 1
 	digitalStack := make([]float64, 10)
 	oprateStack := make([]string, 10)
+	//将第一个运算符设置为最低级的运算符#
 	oprateStack[0] = "#"
 	result := 0.0
-	for _, elem := range str {
-		if elem >= 48 && elem <= 57 {
-			digitalStack[dNum] = float64(elem)
+
+	for i := 0; i < len(str); {
+		if str[i] >= 48 && str[i] <= 57 {
+			fmt.Println(str[i])
+			digitalStack[dNum] = float64(str[i] - 48.0)
 			dNum++
 		} else {
 			op := oprateStack[oNum]
-			k := compare(string(elem), op)
+			k := compare(string(str[i]), op)
 			if k == 1 {
 				oNum++
-				oprateStack[oNum] = string(elem)
+				oprateStack[oNum] = string(str[i])
 			} else if k == -1 {
 				dNum--
 				first := digitalStack[dNum]
@@ -76,6 +79,7 @@ func Calculate(str string) {
 			} else //同级出栈扫描下一个
 			{
 				oNum--
+				i++
 			}
 		}
 	}
