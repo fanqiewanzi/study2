@@ -2,31 +2,31 @@ package calculate
 
 import "fmt"
 
-func compare(str1, str2 string) int {
+func compare(str1, str2 uint8) int {
 	//第一个比第二个大就返回1，小就返回-1，同级返回0
 	switch str1 {
-	case "+", "-":
-		if str2 == "(" || str2 == "#" {
+	case '+', '-':
+		if str2 == '(' || str2 == '#' {
 			return 1
 		} else {
 			return -1
 		}
-	case "*", "/":
-		if str2 == "*" || str2 == "/" {
+	case '*', '/':
+		if str2 == '*' || str2 == '/' {
 			return -1
 		} else {
 			return 1
 		}
-	case "(":
+	case '(':
 		return 1
-	case ")":
-		if str2 == "(" {
+	case ')':
+		if str2 == '(' {
 			return 0
 		} else {
 			return -1
 		}
-	case "#":
-		if str2 == "#" {
+	case '#':
+		if str2 == '#' {
 			return 0
 		} else {
 			return -1
@@ -37,52 +37,51 @@ func compare(str1, str2 string) int {
 }
 
 func Calculate(str string) {
-	//定义两个栈,初始化为10的长度
-	dNum := 0
-	oNum := 1
-	digitalStack := make([]float64, 10)
-	oprateStack := make([]string, 10)
+	//定义两个栈,初始化为10的长度,一个栈用来存运算对象，一个栈用来存运算符
+	//numStack是uint8类型,opStack是int32
+	stack1 := make([]interface{}, 10)
+	stack2 := make([]interface{}, 10)
+	numStack := NewSeqStack(-1, stack1)
+	opStack := NewSeqStack(-1, stack2)
 	//将第一个运算符设置为最低级的运算符#
-	oprateStack[0] = "#"
+	opStack.Push('#')
+	//用来存放每次的运算结果的result
 	result := 0.0
-
+	//进入循环扫描字符串
 	for i := 0; i < len(str); {
-		if str[i] >= 48 && str[i] <= 57 {
-			fmt.Println(str[i])
-			digitalStack[dNum] = float64(str[i] - 48.0)
-			dNum++
+		//如果是数字则进数字栈
+		if str[i] >= '0' && str[i] <= '9' {
+			numStack.Push(str[i])
+			i++
 		} else {
-			op := oprateStack[oNum]
-			k := compare(string(str[i]), op)
+			//进入运算符判断环节，将栈顶运算符取出与当前运算符进行比较
+			op := opStack.GetTop()
+			k := compare(str[i], op.(uint8))
+			//如果当前运算符比栈顶运算符大则将当前运算符入栈
 			if k == 1 {
-				oNum++
-				oprateStack[oNum] = string(str[i])
+				opStack.Push(str[i])
 			} else if k == -1 {
-				dNum--
-				first := digitalStack[dNum]
-				dNum--
-				second := digitalStack[dNum]
-				op := oprateStack[oNum]
-				oNum--
+				//比当前运算符小则进行运算
+				first := numStack.Pop().(float64)
+				second := numStack.Pop().(float64)
+				op := opStack.Pop()
 				switch op {
-				case "+":
+				case '+':
 					result = second + first
-				case "-":
+				case '-':
 					result = second - first
-				case "*":
+				case '*':
 					result = second * first
-				case "/":
+				case '/':
 					result = second / first
 				}
-				dNum++
-				digitalStack[dNum] = result
+				numStack.Push(result)
 			} else //同级出栈扫描下一个
 			{
-				oNum--
+				opStack.Pop()
 				i++
 			}
 		}
 	}
-	dNum--
-	fmt.Println(digitalStack[dNum])
+	fmt.Println(numStack.GetTop())
 }

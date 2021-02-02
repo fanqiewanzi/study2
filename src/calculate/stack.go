@@ -6,10 +6,15 @@ type SeqStack struct {
 	stack []interface{}
 }
 
+//创建栈
+func NewSeqStack(top int, stack []interface{}) *SeqStack {
+	return &SeqStack{top, stack}
+}
+
 //入栈操作
 func (seqstack *SeqStack) Push(elem interface{}) {
-	seqstack.stack[seqstack.top] = elem
 	seqstack.top++
+	seqstack.stack[seqstack.top] = elem
 }
 
 //出栈操作
