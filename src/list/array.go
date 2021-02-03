@@ -1,11 +1,17 @@
 package list
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+)
 
 const defaultCapacity = 10
 const defaultSize = -1
 
 //动态数组结构
+//size	当前最后一个元素下标位置
+//capacity	数组最大容量
+//data	数组
 type Array struct {
 	size     int
 	capacity int
@@ -13,50 +19,73 @@ type Array struct {
 }
 
 //创建一个新的动态数组
-func NewArray(size, capacity int, data []interface{}) *Array {
-	return &Array{size, capacity, data}
+func NewArray(capacity int) *Array {
+	data := make([]interface{}, capacity)
+	return &Array{defaultSize, capacity, data}
+}
+
+//在不输入最大容量时创建
+func NewArrayWithoutNoCap() *Array {
+	data := make([]interface{}, defaultCapacity)
+	return &Array{defaultSize, defaultCapacity, data}
 }
 
 //扩展数组
-func (array *Array) Grow(num int) (bool, *Array) {
-	return true, &Array{array.size, num, array.data}
+func (array *Array) grow(num int) (bool, []interface{}) {
+	data := make([]interface{}, num)
+	for i, elem := range array.data {
+		data[i] = elem
+	}
+	return true, data
 }
 
 //检查数组容量是否足够
-func (array *Array) Check(num int) *Array {
-	if array.size+num > array.capacity {
-		ok, array := array.Grow((array.size + num) * 2)
+func (array *Array) check(num int) bool {
+	if array.size+num+1 > array.capacity {
+		ok, array1 := array.grow(array.size + num + 2)
 		if ok == true {
-			return array
+			array.data = array1
+			return true
 		}
 	}
-	return array
+	return false
+}
+
+//打印数组
+func (array Array) Print() {
+	for _, elem := range array.data {
+		fmt.Print(elem)
+		fmt.Print("\t")
+	}
 }
 
 //向list末尾加入元素
 func (array *Array) Add(obj ...interface{}) error {
-	array.Check(len(obj))
-	for _, i := range obj {
-		array.data[array.size] = i
+	array.check(len(obj))
+	for _, elem := range obj {
 		array.size++
+		array.data[array.size] = elem
 	}
 	return errors.New("no error")
 }
 
 //向指定位置加入元素
 func (array *Array) Insert(location int, obj interface{}) error {
-	array.Check(1)
-	for i := array.size; i >= location; i-- {
+	array.check(1)
+	for i := array.size; i >= location-1; i-- {
 		array.data[i+1] = array.data[i]
 	}
-	array.data[location] = obj
+	array.data[location-1] = obj
 	return errors.New("no error")
 }
 
 //向指定位置修改元素
 func (array *Array) Set(location int, obj interface{}) error {
-	array.data[location] = obj
-	return errors.New("no error")
+	if location == 0 || location > array.size+1 {
+		return errors.New("下标超出")
+	}
+	array.data[location-1] = obj
+	return errors.New("success")
 }
 
 //是否存在某元素
@@ -103,5 +132,5 @@ func (array *Array) ToSlice() []interface{} {
 
 //输出当前list的长度
 func (array *Array) Size() int {
-	return array.size
+	return array.size + 1
 }
