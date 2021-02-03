@@ -12,8 +12,7 @@ func main() {
 	mix.Count(str)
 	mix.Fibonacci()
 	linkTest()
-	calculate.Calculate("32+")
-
+	calculateTest()
 	return
 }
 
@@ -36,5 +35,5 @@ func linkTest() {
 	fmt.Println(list1.Size())
 }
 func calculateTest() {
-	calculate.Calculate("23/")
+	calculate.Calculate("(2+3)*6+1#")
 }
