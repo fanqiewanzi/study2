@@ -60,8 +60,8 @@ func (array *Array) check(num int) bool {
 
 //打印数组
 func (array Array) Print() {
-	for _, elem := range array.data {
-		fmt.Print(elem)
+	for i := 0; i <= array.size; i++ {
+		fmt.Print(array.data[i])
 		fmt.Print("\t")
 	}
 }
@@ -125,7 +125,7 @@ func (array *Array) Get(location int) (interface{}, error) {
 }
 
 //判断是否相等,一个元素一个元素进行比较，其中有不同的就返回false,否则返回true,其中只有最大下标相同才会进行比较，最大下标不同直接返回false
-func (array Array) Equals(array1 Array) bool {
+func (array *Array) Equals(array1 *Array) bool {
 	if array.size == array1.size {
 		for i, elem := range array.data {
 			if array1.data[i] != elem {
@@ -137,13 +137,9 @@ func (array Array) Equals(array1 Array) bool {
 	return false
 }
 
-//转换为Slice类型,直接赋值过去
+//转换为Slice类型，data就是slice所以直接赋值过去
 func (array Array) ToSlice() []interface{} {
-	flag := make([]interface{}, array.capacity)
-	for i, elem := range array.data {
-		flag[i] = elem
-	}
-	return flag
+	return array.data
 }
 
 //输出当前list的长度

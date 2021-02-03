@@ -8,21 +8,22 @@ import (
 )
 
 func main() {
-	str := "sdkja3al123++  sadf"
-	mix.Count(str)
+	mix.Count("str324ikasjdh 1234+)sd<>")
 	mix.Fibonacci()
+	fmt.Println("\n链表测试")
 	linkTest()
-	calculateTest()
+	fmt.Println("\n数组测试")
 	arraylistTest()
+	fmt.Println("\n计算器测试")
+	calculateTest()
 	return
 }
 
 func linkTest() {
-	list1 := new(list.LinkList)
-	list2 := new(list.LinkList)
+	list1 := list.NewLinkList()
+	list2 := list.NewLinkList()
 	list1.Add(1, 2, 3, 4)
 	list2.Add(1, 2, 3, 4)
-	fmt.Println()
 	list1.Print()
 	list1.Insert(2, 5)
 	list1.Print()
@@ -36,7 +37,7 @@ func linkTest() {
 	fmt.Println(list1.Size())
 }
 func calculateTest() {
-	calculate.Calculate("(2+3)*6+1#")
+	calculate.Calculate("(2+3)/6+1")
 }
 
 func arraylistTest() {
@@ -54,5 +55,6 @@ func arraylistTest() {
 	fmt.Println(list1.Get(2))
 	list1.Add(243, 43, 34, 3, 2, 2, 12, 4)
 	list1.Print()
+	fmt.Println()
 	fmt.Print(list1.Size())
 }

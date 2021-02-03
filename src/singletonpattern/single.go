@@ -13,9 +13,9 @@ var (
 )
 
 func newSingle() *Single {
-	// once.Do 调用的函数只执行 1 次
+	//once.Do调用的函数只执行1次,所以这个是单例模式
 	once.Do(func() {
-		single = &Single{name: "Tom"}
+		single = &Single{name: "BAZINGA"}
 	})
 	return single
 }
