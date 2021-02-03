@@ -54,4 +54,5 @@ func arraylistTest() {
 	fmt.Println(list1.Get(2))
 	list1.Add(243, 43, 34, 3, 2, 2, 12, 4)
 	list1.Print()
+	fmt.Print(list1.Size())
 }
