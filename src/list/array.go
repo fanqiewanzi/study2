@@ -17,18 +17,19 @@ type Array struct {
 	size     int
 	capacity int
 	data     []interface{}
+	List
 }
 
 //创建一个新的动态数组
 func NewArray(capacity int) *Array {
 	data := make([]interface{}, capacity)
-	return &Array{defaultSize, capacity, data}
+	return &Array{defaultSize, capacity, data, nil}
 }
 
 //在不输入最大容量时创建
 func NewArrayWithoutNoCap() *Array {
 	data := make([]interface{}, defaultCapacity)
-	return &Array{defaultSize, defaultCapacity, data}
+	return &Array{defaultSize, defaultCapacity, data, nil}
 }
 
 //扩展数组

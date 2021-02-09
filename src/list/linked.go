@@ -12,10 +12,11 @@ type LinkList struct {
 	data interface{}
 	next *LinkList
 	size int
+	List
 }
 
 func NewLinkList() *LinkList {
-	return &LinkList{nil, nil, defaultCount}
+	return &LinkList{nil, nil, defaultCount, nil}
 }
 
 func (linkList *LinkList) Add(obj ...interface{}) error {
